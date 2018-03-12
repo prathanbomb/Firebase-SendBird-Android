@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Global colors -->
-    <color name="colorPrimary">#774df2</color>
-    <color name="colorPrimaryDark">#512DA8</color>
+    <color name="colorPrimary">#4da0f2</color>
+    <color name="colorPrimaryDark">#2d6da8</color>
     <color name="colorAccent">#1fcc94</color>
+    <color name="colorAccentDark">#1cb382</color>
+
+    <color name="colorRed">#ff0900</color>
+    <color name="colorRedDark">#bc0700</color>
+
+    <color name="colorOrange">#ed8733</color>
+    <color name="colorOrangeDark">#d97727</color>
+
+    <color name="colorRedGoogle">#d34836</color>
+    <color name="colorRedGoogleDark">#bc4131</color>
 
     <color name="textColorPrimary">#3a414d</color>
     <color name="textColorLight">#6f7c92</color>
 
     <!-- Login -->
-    <color name="colorButton">#774df2</color>
+    <color name="colorButton">#4da0f2</color>
+
+    <color name="colorFacebookButton">#416BC1</color>
+    <color name="colorFacebookButtonDark">#35589f</color>
 
     <!-- Open Chat -->
     <color name="openChatText">#47505d</color>
@@ -17,7 +30,7 @@
     <color name="openChatNicknameMe">#00BCD4</color>
 
     <!-- Group Chat -->
-    <color name="groupChatBubbleMe">#774df2</color>
+    <color name="groupChatBubbleMe">#4da0f2</color>
     <color name="groupChatTextMe">#ffffff</color>
     <color name="groupChatBubbleOther">#eef1f6</color>
     <color name="groupChatTextOther">#000000</color>
@@ -32,15 +45,15 @@
     <color name="groupChatDateBackground">#C0C0C0</color>
 
     <!-- Group Channel List -->
-    <color name="groupChannelUnreadCountBackground">#7d62df</color>
+    <color name="groupChannelUnreadCountBackground">#4da0f2</color>
     <color name="groupChannelUnreadCountText">#ffffff</color>
 
     <!-- Selector -->
     <color name="btn_create">#ffffff</color>
-    <color name="btn_create_disabled">#c1acff</color>
+    <color name="btn_create_disabled">#acd1ff</color>
     <color name="btn_edit">#ffffff</color>
-    <color name="btn_edit_disabled">#c1acff</color>
-    <color name="btn_send">#774df2</color>
+    <color name="btn_edit_disabled">#acd3ff</color>
+    <color name="btn_send">#4da0f2</color>
     <color name="btn_send_disabled">#8e8e8e</color>
 
 </resources>

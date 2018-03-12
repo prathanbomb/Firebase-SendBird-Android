@@ -1,4 +1,5 @@
-package com.sendbird.android.sample.groupchannel;
+package com.sendbird.android.sample.privatechannel;
+
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,9 +29,12 @@ import com.sendbird.android.sample.R;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.sendbird.android.sample.groupchannel.CreateGroupChannelActivity.CUSTOM_TYPE_GROUP;
+import static com.sendbird.android.sample.privatechannel.CreatePrivateChannelActivity.CUSTOM_TYPE_PRIVATE;
 
-public class GroupChannelListFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class PrivateChannelListFragment extends Fragment {
 
     private static final String CHANNEL_HANDLER_ID = "CHANNEL_HANDLER_GROUP_CHANNEL_LIST";
     public static final String EXTRA_GROUP_CHANNEL_URL = "GROUP_CHANNEL_URL";
@@ -38,19 +42,19 @@ public class GroupChannelListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
-    private GroupChannelListAdapter mChannelListAdapter;
+    private PrivateChannelListAdapter mChannelListAdapter;
     private FloatingActionButton mCreateChannelFab;
     private GroupChannelListQuery mChannelListQuery;
     private SwipeRefreshLayout mSwipeRefresh;
 
-    public static GroupChannelListFragment newInstance() {
-        return new GroupChannelListFragment();
+    public static PrivateChannelListFragment newInstance() {
+        return new PrivateChannelListFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mChannelListAdapter = new GroupChannelListAdapter(getActivity());
+        mChannelListAdapter = new PrivateChannelListAdapter(getActivity());
         mChannelListAdapter.load();
     }
 
@@ -64,18 +68,18 @@ public class GroupChannelListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Log.d("LIFECYCLE", "GroupChannelListFragment onCreateView()");
+        Log.d("LIFECYCLE", "PrivateChannelListFragment onCreateView()");
 
-        View rootView = inflater.inflate(R.layout.fragment_group_channel_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_private_channel_list, container, false);
 
         setRetainInstance(true);
 
         // Change action bar title
-        ((GroupChannelActivity) getActivity()).setActionBarTitle(getResources().getString(R.string.all_group_channels));
+        ((PrivateChannelActivity) getActivity()).setActionBarTitle(getResources().getString(R.string.all_private_channels));
 
-        mRecyclerView = rootView.findViewById(R.id.recycler_group_channel_list);
-        mCreateChannelFab = rootView.findViewById(R.id.fab_group_channel_list);
-        mSwipeRefresh = rootView.findViewById(R.id.swipe_layout_group_channel_list);
+        mRecyclerView = rootView.findViewById(R.id.recycler_private_channel_list);
+        mCreateChannelFab = rootView.findViewById(R.id.fab_private_channel_list);
+        mSwipeRefresh = rootView.findViewById(R.id.swipe_layout_private_channel_list);
 
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -88,7 +92,7 @@ public class GroupChannelListFragment extends Fragment {
         mCreateChannelFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CreateGroupChannelActivity.class);
+                Intent intent = new Intent(getContext(), CreatePrivateChannelActivity.class);
                 startActivityForResult(intent, INTENT_REQUEST_NEW_GROUP_CHANNEL);
             }
         });
@@ -100,7 +104,7 @@ public class GroupChannelListFragment extends Fragment {
 
     @Override
     public void onResume() {
-        Log.d("LIFECYCLE", "GroupChannelListFragment onResume()");
+        Log.d("LIFECYCLE", "PrivateChannelListFragment onResume()");
 
         refreshChannelList(15);
 
@@ -122,7 +126,7 @@ public class GroupChannelListFragment extends Fragment {
 
     @Override
     public void onPause() {
-        Log.d("LIFECYCLE", "GroupChannelListFragment onPause()");
+        Log.d("LIFECYCLE", "PrivateChannelListFragment onPause()");
 
         SendBird.removeChannelHandler(CHANNEL_HANDLER_ID);
         super.onPause();
@@ -130,7 +134,7 @@ public class GroupChannelListFragment extends Fragment {
 
     @Override
     public void onDetach() {
-        Log.d("LIFECYCLE", "GroupChannelListFragment onDetach()");
+        Log.d("LIFECYCLE", "PrivateChannelListFragment onDetach()");
         super.onDetach();
     }
 
@@ -140,9 +144,9 @@ public class GroupChannelListFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 // Channel successfully created
                 // Enter the newly created channel.
-                String newChannelUrl = data.getStringExtra(CreateGroupChannelActivity.EXTRA_NEW_CHANNEL_URL);
+                String newChannelUrl = data.getStringExtra(CreatePrivateChannelActivity.EXTRA_NEW_CHANNEL_URL);
                 if (newChannelUrl != null) {
-                    enterGroupChannel(newChannelUrl);
+                    enterPrivateChannel(newChannelUrl);
                 }
             } else {
                 Log.d("GrChLIST", "resultCode not STATUS_OK");
@@ -170,14 +174,14 @@ public class GroupChannelListFragment extends Fragment {
 
     // Sets up channel list adapter
     private void setUpChannelListAdapter() {
-        mChannelListAdapter.setOnItemClickListener(new GroupChannelListAdapter.OnItemClickListener() {
+        mChannelListAdapter.setOnItemClickListener(new PrivateChannelListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(GroupChannel channel) {
-                enterGroupChannel(channel);
+                enterPrivateChannel(channel);
             }
         });
 
-        mChannelListAdapter.setOnItemLongClickListener(new GroupChannelListAdapter.OnItemLongClickListener() {
+        mChannelListAdapter.setOnItemLongClickListener(new PrivateChannelListAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(final GroupChannel channel) {
                 showChannelOptionsDialog(channel);
@@ -254,10 +258,10 @@ public class GroupChannelListFragment extends Fragment {
      *
      * @param channel The Group Channel to enter.
      */
-    void enterGroupChannel(GroupChannel channel) {
+    void enterPrivateChannel(GroupChannel channel) {
         final String channelUrl = channel.getUrl();
 
-        enterGroupChannel(channelUrl);
+        enterPrivateChannel(channelUrl);
     }
 
     /**
@@ -265,10 +269,10 @@ public class GroupChannelListFragment extends Fragment {
      *
      * @param channelUrl The URL of the channel to enter.
      */
-    void enterGroupChannel(String channelUrl) {
-        GroupChatFragment fragment = GroupChatFragment.newInstance(channelUrl);
+    void enterPrivateChannel(String channelUrl) {
+        PrivateChatFragment fragment = PrivateChatFragment.newInstance(channelUrl);
         getFragmentManager().beginTransaction()
-                .replace(R.id.container_group_channel, fragment)
+                .replace(R.id.container_private_channel, fragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -282,8 +286,7 @@ public class GroupChannelListFragment extends Fragment {
     private void refreshChannelList(int numChannels) {
         mChannelListQuery = GroupChannel.createMyGroupChannelListQuery();
         mChannelListQuery.setLimit(numChannels);
-        mChannelListQuery.setCustomTypeFilter(CUSTOM_TYPE_GROUP);
-
+        mChannelListQuery.setCustomTypeFilter(CUSTOM_TYPE_PRIVATE);
         mChannelListQuery.next(new GroupChannelListQuery.GroupChannelListQueryResultHandler() {
             @Override
             public void onResult(List<GroupChannel> list, SendBirdException e) {
@@ -342,4 +345,5 @@ public class GroupChannelListFragment extends Fragment {
             }
         });
     }
+
 }

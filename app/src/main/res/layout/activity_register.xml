@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_login"
+    android:id="@+id/layout_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    tools:context=".main.LoginActivity"
+    tools:context=".main.RegisterActivity"
     android:background="@android:color/white">
 
     <LinearLayout
@@ -51,20 +51,67 @@
                 android:id="@+id/edittext_password"
                 android:hint="@string/login_password"
                 android:inputType="textPassword"
+                android:imeOptions="actionNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edittext_retype_password"
+                android:hint="Re-type Password"
+                android:inputType="textPassword"
+                android:imeOptions="actionNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edittext_nickname"
+                android:hint="Nickname"
+                android:inputType="text"
                 android:imeOptions="actionDone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </android.support.design.widget.TextInputLayout>
 
+    </LinearLayout>
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar_register"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
 
             <Button
-                android:id="@+id/button_login_connect"
-                android:text="@string/login_connect"
+                android:id="@+id/button_cancel"
+                android:text="cancel"
                 android:layout_width="fill_parent"
                 android:layout_height="52dp"
                 android:textStyle="bold"
@@ -76,7 +123,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
 
             <Button
                 android:id="@+id/button_register"
@@ -89,65 +137,6 @@
 
         </FrameLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@android:color/black"/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/button_google_login"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                app:buttonSize="wide"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/btn_google"
-                android:layout_width="fill_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/btn_google_login"
-                android:text="Google"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" >
-
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btn_facebook"
-                android:layout_width="fill_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/btn_facebook_login"
-                android:text="Facebook"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-
-        </FrameLayout>
-
     </LinearLayout>
-
-    <android.support.v4.widget.ContentLoadingProgressBar
-        android:id="@+id/progress_bar_login"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible" />
 
 </android.support.design.widget.CoordinatorLayout>

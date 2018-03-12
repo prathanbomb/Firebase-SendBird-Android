@@ -3,35 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sendbird.android.sample">
 
+    <uses-sdk tools:overrideLibrary="com.stfalcon.multiimageview" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-sdk tools:overrideLibrary="com.stfalcon.multiimageview"/> <!-- min 16 -->
-
+    <!-- min 16 -->
     <application
         android:name=".main.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/sendbird_ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.LoginActivity">
+        <activity android:name=".main.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity"
-            android:label="@string/select_channel_type"/>
+        <activity android:name=".main.LoginActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:label="@string/select_channel_type" />
         <activity
             android:name=".main.SettingsActivity"
             android:label="@string/settings" />
         <activity
             android:name=".main.BlockedMembersListActivity"
             android:label="@string/blocked_members_list" />
-
         <activity android:name=".utils.PhotoViewerActivity" />
         <activity
             android:name=".utils.MediaPlayerActivity"
@@ -53,6 +63,8 @@
             android:label="@string/participant_list" />
         <activity android:name=".openchannel.OpenChannelActivity" />
         <activity android:name=".groupchannel.GroupChannelActivity" />
+        <activity android:name=".privatechannel.PrivateChannelActivity" />
+        <activity android:name=".privatechannel.CreatePrivateChannelActivity" />
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -65,6 +77,27 @@
             </intent-filter>
         </service>
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/facebook_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".main.RegisterActivity" />
     </application>
 
 </manifest>

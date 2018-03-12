@@ -1,4 +1,4 @@
-package com.sendbird.android.sample.groupchannel;
+package com.sendbird.android.sample.privatechannel;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +24,7 @@ import java.util.List;
  * Populates a RecyclerView with a list of users, each with a checkbox.
  */
 
-public class SelectableUserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SelectablePrivateUserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<User> mUsers;
     private Context mContext;
@@ -36,13 +35,13 @@ public class SelectableUserListAdapter extends RecyclerView.Adapter<RecyclerView
     private SelectableUserHolder mSelectableUserHolder;
 
     // For the adapter to track which users have been selected
-    private OnItemCheckedChangeListener mCheckedChangeListener;
+    private OnItemSelectedListener mOnItemSelectedListener;
 
-    public interface OnItemCheckedChangeListener {
-        void OnItemChecked(User user, boolean checked);
+    public interface OnItemSelectedListener {
+        void OnItemSelected(User user);
     }
 
-    public SelectableUserListAdapter(Context context, boolean isBlockedList, boolean showCheckBox) {
+    public SelectablePrivateUserListAdapter(Context context, boolean isBlockedList, boolean showCheckBox) {
         mContext = context;
         mUsers = new ArrayList<>();
         mSelectedUserIds = new ArrayList<>();
@@ -50,8 +49,8 @@ public class SelectableUserListAdapter extends RecyclerView.Adapter<RecyclerView
         mShowCheckBox = showCheckBox;
     }
 
-    public void setItemCheckedChangeListener(OnItemCheckedChangeListener listener) {
-        mCheckedChangeListener = listener;
+    public void setSelectItemListener(OnItemSelectedListener listener) {
+        mOnItemSelectedListener = listener;
     }
 
     public void setUserList(List<User> users) {
@@ -106,7 +105,7 @@ public class SelectableUserListAdapter extends RecyclerView.Adapter<RecyclerView
                 mContext,
                 mUsers.get(position),
                 isSelected(mUsers.get(position)),
-                mCheckedChangeListener);
+                mOnItemSelectedListener);
     }
 
     @Override
@@ -149,9 +148,11 @@ public class SelectableUserListAdapter extends RecyclerView.Adapter<RecyclerView
             mShowCheckBox = showCheckBox;
         }
 
-        private void bind(final Context context, final User user, boolean isSelected, final OnItemCheckedChangeListener listener) {
+        private void bind(final Context context, final User user, boolean isSelected, final OnItemSelectedListener listener) {
             nameText.setText(user.getNickname());
             ImageUtils.displayRoundImageFromUrl(context, user.getProfileUrl(), profileImage);
+
+            checkbox.setVisibility(View.GONE);
 
             if (mIsBlockedList) {
                 blockedImage.setVisibility(View.VISIBLE);
@@ -159,41 +160,48 @@ public class SelectableUserListAdapter extends RecyclerView.Adapter<RecyclerView
                 blockedImage.setVisibility(View.GONE);
             }
 
-            if (mShowCheckBox) {
-                checkbox.setVisibility(View.VISIBLE);
-            } else {
-                checkbox.setVisibility(View.GONE);
-            }
-
-            if (isSelected) {
-                checkbox.setChecked(true);
-            } else {
-                checkbox.setChecked(false);
-            }
-
-            if (mShowCheckBox) {
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mShowCheckBox) {
-                            checkbox.setChecked(!checkbox.isChecked());
-                        }
-                    }
-                });
-            }
-
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    listener.OnItemChecked(user, isChecked);
-
-                    if (isChecked) {
-                        mSelectedUserIds.add(user.getUserId());
-                    } else {
-                        mSelectedUserIds.remove(user.getUserId());
-                    }
+                public void onClick(View v) {
+                    listener.OnItemSelected(user);
                 }
             });
+
+//            if (mShowCheckBox) {
+//                checkbox.setVisibility(View.VISIBLE);
+//            } else {
+//                checkbox.setVisibility(View.GONE);
+//            }
+//
+//            if (isSelected) {
+//                checkbox.setChecked(true);
+//            } else {
+//                checkbox.setChecked(false);
+//            }
+//
+//            if (mShowCheckBox) {
+//                itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (mShowCheckBox) {
+//                            checkbox.setChecked(!checkbox.isChecked());
+//                        }
+//                    }
+//                });
+//            }
+//
+//            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    listener.OnItemChecked(user, isChecked);
+//
+//                    if (isChecked) {
+//                        mSelectedUserIds.add(user.getUserId());
+//                    } else {
+//                        mSelectedUserIds.remove(user.getUserId());
+//                    }
+//                }
+//            });
 
             if (user.getUserId().equals(PreferenceUtils.getUserId(context))) {
                 itemView.setEnabled(false);

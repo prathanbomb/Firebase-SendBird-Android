@@ -16,13 +16,17 @@
 
 package com.sendbird.android.sample.fcm;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -30,6 +34,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sendbird.android.sample.R;
 import com.sendbird.android.sample.groupchannel.GroupChannelActivity;
+import com.sendbird.android.sample.privatechannel.PrivateChannelActivity;
 import com.sendbird.android.sample.utils.PreferenceUtils;
 
 import org.json.JSONException;
@@ -64,6 +69,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Log.d(TAG, "Message type: " + remoteMessage.getData());
         }
 
         // Check if message contains a notification payload.
@@ -72,16 +78,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         String channelUrl = null;
+        String customType = null;
         try {
             JSONObject sendBird = new JSONObject(remoteMessage.getData().get("sendbird"));
             JSONObject channel = (JSONObject) sendBird.get("channel");
+            customType = (String) sendBird.get("custom_type");
             channelUrl = (String) channel.get("channel_url");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-        sendNotification(this, remoteMessage.getData().get("message"), channelUrl);
+        sendNotification(this, remoteMessage.getData().get("message"), channelUrl, customType);
     }
     // [END receive_message]
 
@@ -89,18 +97,47 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * Create and show a simple notification containing the received FCM message.
      *
      * @param messageBody FCM message body received.
+     * @param customType Custom type message
      */
-    public static void sendNotification(Context context, String messageBody, String channelUrl) {
-        Intent intent = new Intent(context, GroupChannelActivity.class);
+    public void sendNotification(Context context, String messageBody, String channelUrl, String customType) {
+
+        Log.d("channelUrl", channelUrl);
+
+        Intent intent;
+
+        if (customType.equals("Group")) {
+            intent = new Intent(context, GroupChannelActivity.class);
+        } else {
+            intent = new Intent(context, PrivateChannelActivity.class);
+        }
         intent.putExtra("groupChannelUrl", channelUrl);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        String id = "id_message";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            // The user-visible name of the channel.
+            CharSequence name = "Message";
+            // The user-visible description of the channel.
+            String description = "Notifications when you have new message";
+            int importance = NotificationManager.IMPORTANCE_MAX;
+            @SuppressLint("WrongConstant") NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+            // Configure the notification channel.
+            mChannel.setDescription(description);
+            mChannel.enableLights(true);
+            mChannel.setShowBadge(true);
+            // Sets the notification light color for notifications posted to this
+            // channel, if the device supports this feature.
+            mChannel.setLightColor(Color.GREEN);
+            notificationManager.createNotificationChannel(mChannel);
+        }
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.sendbird_ic_launcher)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, id)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(context.getResources().getString(R.string.app_name))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -116,6 +153,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(1 /* ID of notification */, notificationBuilder.build());
     }
 }

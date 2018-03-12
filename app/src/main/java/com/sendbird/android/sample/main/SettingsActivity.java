@@ -102,33 +102,33 @@ public class SettingsActivity extends AppCompatActivity {
         mIMM = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mCalendar = Calendar.getInstance(Locale.getDefault());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_settings);
+        Toolbar toolbar = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_window_close_white_24_dp);
         }
 
-        mSettingsLayout = (CoordinatorLayout) findViewById(R.id.layout_settings);
+        mSettingsLayout = findViewById(R.id.layout_settings);
 
-        mImageViewProfile = (ImageView) findViewById(R.id.image_view_profile);
-        mEditTextNickname = (EditText) findViewById(R.id.edit_text_nickname);
-        mButtonSaveNickName = (Button) findViewById(R.id.button_save_nickname);
+        mImageViewProfile = findViewById(R.id.image_view_profile);
+        mEditTextNickname = findViewById(R.id.edit_text_nickname);
+        mButtonSaveNickName = findViewById(R.id.button_save_nickname);
 
-        mLinearLayoutNotifications = (LinearLayout) findViewById(R.id.linear_layout_notifications);
-        mSwitchNotifications = (SwitchCompat) findViewById(R.id.switch_notifications);
-        mSwitchNotificationsShowPreviews = (SwitchCompat) findViewById(R.id.switch_notifications_show_previews);
+        mLinearLayoutNotifications = findViewById(R.id.linear_layout_notifications);
+        mSwitchNotifications = findViewById(R.id.switch_notifications);
+        mSwitchNotificationsShowPreviews = findViewById(R.id.switch_notifications_show_previews);
 
-        mSwitchNotificationsDoNotDisturb = (SwitchCompat) findViewById(R.id.switch_notifications_do_not_disturb);
-        mLinearLayoutDoNotDisturb = (LinearLayout) findViewById(R.id.linear_layout_do_not_disturb);
-        mLinearLayoutNotificationsDoNotDisturbFrom = (LinearLayout) findViewById(R.id.linear_layout_notifications_do_not_disturb_from);
-        mLinearLayoutNotificationsDoNotDisturbTo = (LinearLayout) findViewById(R.id.linear_layout_notifications_do_not_disturb_to);
-        mTextViewNotificationsDoNotDisturbFrom = (TextView) findViewById(R.id.text_view_notifications_do_not_disturb_from);
-        mTextViewNotificationsDoNotDisturbTo = (TextView) findViewById(R.id.text_view_notifications_do_not_disturb_to);
+        mSwitchNotificationsDoNotDisturb = findViewById(R.id.switch_notifications_do_not_disturb);
+        mLinearLayoutDoNotDisturb = findViewById(R.id.linear_layout_do_not_disturb);
+        mLinearLayoutNotificationsDoNotDisturbFrom = findViewById(R.id.linear_layout_notifications_do_not_disturb_from);
+        mLinearLayoutNotificationsDoNotDisturbTo = findViewById(R.id.linear_layout_notifications_do_not_disturb_to);
+        mTextViewNotificationsDoNotDisturbFrom = findViewById(R.id.text_view_notifications_do_not_disturb_from);
+        mTextViewNotificationsDoNotDisturbTo = findViewById(R.id.text_view_notifications_do_not_disturb_to);
 
-        mCheckBoxGroupChannelDistinct = (CheckBox) findViewById(R.id.checkbox_make_group_channel_distinct);
+        mCheckBoxGroupChannelDistinct = findViewById(R.id.checkbox_make_group_channel_distinct);
 
-        mLinearLayoutBlockedMembersList = (LinearLayout) findViewById(R.id.linear_layout_blocked_members_list);
+        mLinearLayoutBlockedMembersList = findViewById(R.id.linear_layout_blocked_members_list);
         mLinearLayoutBlockedMembersList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

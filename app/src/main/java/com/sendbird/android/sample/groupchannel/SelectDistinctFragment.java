@@ -20,11 +20,11 @@ public class SelectDistinctFragment extends Fragment{
     private CheckBox mCheckBox;
     private DistinctSelectedListener mListener;
 
-    interface DistinctSelectedListener {
+    public interface DistinctSelectedListener {
         void onDistinctSelected(boolean distinct);
     }
 
-    static SelectDistinctFragment newInstance() {
+    public static SelectDistinctFragment newInstance() {
         return new SelectDistinctFragment();
     }
 

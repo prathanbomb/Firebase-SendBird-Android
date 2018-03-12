@@ -39,10 +39,10 @@ public class MemberListActivity extends AppCompatActivity{
         }
 
         mChannelUrl = getIntent().getStringExtra(GroupChatFragment.EXTRA_CHANNEL_URL);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_member_list);
+        mRecyclerView = findViewById(R.id.recycler_member_list);
         mListAdapter = new UserListAdapter(this, true);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_member_list);
+        Toolbar toolbar = findViewById(R.id.toolbar_member_list);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

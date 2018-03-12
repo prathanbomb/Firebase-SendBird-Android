@@ -1,4 +1,5 @@
-package com.sendbird.android.sample.groupchannel;
+package com.sendbird.android.sample.privatechannel;
+
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,54 +19,49 @@ import com.sendbird.android.sample.R;
 
 import java.util.List;
 
-
 /**
- * A fragment displaying a list of selectable users.
+ * A simple {@link Fragment} subclass.
  */
-public class SelectUserFragment extends Fragment{
+public class SelectPrivateUserFragment extends Fragment {
 
     private LinearLayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
-    private SelectableUserListAdapter mListAdapter;
+    private SelectablePrivateUserListAdapter mListAdapter;
 
     private UserListQuery mUserListQuery;
-    private UsersSelectedListener mListener;
+    private SelectPrivateUserFragment.UsersSelectedListener mListener;
 
     // To pass selected user IDs to the parent Activity.
     interface UsersSelectedListener {
-        void onUserSelected(boolean selected, String userId);
+        void onUserSelected(String userId);
     }
 
-    static SelectUserFragment newInstance() {
-        return new SelectUserFragment();
+    static SelectPrivateUserFragment newInstance() {
+        return new SelectPrivateUserFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_select_user, container, false);
-        mRecyclerView = rootView.findViewById(R.id.recycler_select_user);
-        mListAdapter = new SelectableUserListAdapter(getActivity(), false, true);
+        View rootView = inflater.inflate(R.layout.fragment_select_private_user, container, false);
+        mRecyclerView = rootView.findViewById(R.id.recycler_select_private_user);
+        mListAdapter = new SelectablePrivateUserListAdapter(getActivity(), false, true);
 
-        mListAdapter.setItemCheckedChangeListener(new SelectableUserListAdapter.OnItemCheckedChangeListener() {
+        mListAdapter.setSelectItemListener(new SelectablePrivateUserListAdapter.OnItemSelectedListener() {
             @Override
-            public void OnItemChecked(User user, boolean checked) {
-                if (checked) {
-                    mListener.onUserSelected(true, user.getUserId());
-                } else {
-                    mListener.onUserSelected(false, user.getUserId());
-                }
+            public void OnItemSelected(User user) {
+                mListener.onUserSelected(user.getUserId());
             }
         });
 
-        mListener = (UsersSelectedListener) getActivity();
+        mListener = (SelectPrivateUserFragment.UsersSelectedListener) getActivity();
 
         setUpRecyclerView();
 
         loadInitialUserList(15);
 
-        ((CreateGroupChannelActivity) getActivity()).setState(CreateGroupChannelActivity.STATE_SELECT_USERS);
+//        ((CreatePrivateChannelActivity) getActivity()).setState(CreatePrivateChannelActivity.STATE_SELECT_USERS);
 
         return rootView;
     }
@@ -91,6 +87,7 @@ public class SelectUserFragment extends Fragment{
      */
     private void loadInitialUserList(int size) {
         mUserListQuery = SendBird.createUserListQuery();
+
         mUserListQuery.setLimit(size);
         mUserListQuery.next(new UserListQuery.UserListQueryResultHandler() {
             @Override
@@ -99,6 +96,7 @@ public class SelectUserFragment extends Fragment{
                     // Error!
                     return;
                 }
+
                 mListAdapter.setUserList(list);
             }
         });
@@ -121,4 +119,5 @@ public class SelectUserFragment extends Fragment{
             }
         });
     }
+
 }

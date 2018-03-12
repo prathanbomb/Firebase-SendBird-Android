@@ -1,4 +1,5 @@
-package com.sendbird.android.sample.groupchannel;
+package com.sendbird.android.sample.privatechannel;
+
 
 import android.Manifest;
 import android.app.Activity;
@@ -63,12 +64,14 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
-
-public class GroupChatFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class PrivateChatFragment extends Fragment {
 
     private static final String CONNECTION_HANDLER_ID = "CONNECTION_HANDLER_GROUP_CHAT";
 
-    private static final String LOG_TAG = GroupChatFragment.class.getSimpleName();
+    private static final String LOG_TAG = PrivateChatFragment.class.getSimpleName();
 
     private static final int STATE_NORMAL = 0;
     private static final int STATE_EDIT = 1;
@@ -78,14 +81,14 @@ public class GroupChatFragment extends Fragment {
     private static final int INTENT_REQUEST_CHOOSE_MEDIA = 301;
     private static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 13;
     static final String EXTRA_CHANNEL_URL = "EXTRA_CHANNEL_URL";
-    private static final String GROUP_MESSAGE = "Group";
+    private static final String PRIVATE_MESSAGE = "Private";
 
     private InputMethodManager mIMM;
     private HashMap<BaseChannel.SendFileMessageWithProgressHandler, FileMessage> mFileProgressHandlerMap;
 
     private RelativeLayout mRootLayout;
     private RecyclerView mRecyclerView;
-    private GroupChatAdapter mChatAdapter;
+    private PrivateChatAdapter mChatAdapter;
     private LinearLayoutManager mLayoutManager;
     private EditText mMessageEditText;
     private Button mMessageSendButton;
@@ -105,11 +108,11 @@ public class GroupChatFragment extends Fragment {
     /**
      * To create an instance of this fragment, a Channel URL should be required.
      */
-    public static GroupChatFragment newInstance(@NonNull String channelUrl) {
-        GroupChatFragment fragment = new GroupChatFragment();
+    public static PrivateChatFragment newInstance(@NonNull String channelUrl) {
+        PrivateChatFragment fragment = new PrivateChatFragment();
 
         Bundle args = new Bundle();
-        args.putString(GroupChannelListFragment.EXTRA_GROUP_CHANNEL_URL, channelUrl);
+        args.putString(PrivateChannelListFragment.EXTRA_GROUP_CHANNEL_URL, channelUrl);
         fragment.setArguments(args);
 
         return fragment;
@@ -127,12 +130,12 @@ public class GroupChatFragment extends Fragment {
             mChannelUrl = savedInstanceState.getString(STATE_CHANNEL_URL);
         } else {
             // Get channel URL from GroupChannelListFragment.
-            mChannelUrl = getArguments().getString(GroupChannelListFragment.EXTRA_GROUP_CHANNEL_URL);
+            mChannelUrl = getArguments().getString(PrivateChannelListFragment.EXTRA_GROUP_CHANNEL_URL);
         }
 
         Log.d(LOG_TAG, mChannelUrl);
 
-        mChatAdapter = new GroupChatAdapter(getActivity());
+        mChatAdapter = new PrivateChatAdapter(getActivity());
         setUpChatListAdapter();
 
         // Load messages from cache.
@@ -142,19 +145,19 @@ public class GroupChatFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_group_chat, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_private_chat, container, false);
 
         setRetainInstance(true);
 
-        mRootLayout = (RelativeLayout) rootView.findViewById(R.id.layout_group_chat_root);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_group_chat);
+        mRootLayout = (RelativeLayout) rootView.findViewById(R.id.layout_private_chat_root);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_private_chat);
 
-        mCurrentEventLayout = rootView.findViewById(R.id.layout_group_chat_current_event);
-        mCurrentEventText = (TextView) rootView.findViewById(R.id.text_group_chat_current_event);
+        mCurrentEventLayout = rootView.findViewById(R.id.layout_private_chat_current_event);
+        mCurrentEventText = (TextView) rootView.findViewById(R.id.text_private_chat_current_event);
 
-        mMessageEditText = (EditText) rootView.findViewById(R.id.edittext_group_chat_message);
-        mMessageSendButton = (Button) rootView.findViewById(R.id.button_group_chat_send);
-        mUploadFileButton = (ImageButton) rootView.findViewById(R.id.button_group_chat_upload);
+        mMessageEditText = (EditText) rootView.findViewById(R.id.edittext_private_chat_message);
+        mMessageSendButton = (Button) rootView.findViewById(R.id.button_private_chat_send);
+        mUploadFileButton = (ImageButton) rootView.findViewById(R.id.button_private_chat_upload);
 
         mMessageEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -399,7 +402,7 @@ public class GroupChatFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_group_chat, menu);
+        inflater.inflate(R.menu.menu_private_chat, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -407,17 +410,7 @@ public class GroupChatFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_group_channel_invite) {
-            Intent intent = new Intent(getActivity(), InviteMemberActivity.class);
-            intent.putExtra(EXTRA_CHANNEL_URL, mChannelUrl);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_group_channel_view_members) {
-            Intent intent = new Intent(getActivity(), MemberListActivity.class);
-            intent.putExtra(EXTRA_CHANNEL_URL, mChannelUrl);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_group_channel_leave) {
+        if (id == R.id.action_group_channel_leave) {
             new AlertDialog.Builder(getActivity())
                     .setTitle("Leave channel " + mChannel.getName() + "?")
                     .setPositiveButton("Leave", new DialogInterface.OnClickListener() {
@@ -466,7 +459,7 @@ public class GroupChatFragment extends Fragment {
     }
 
     private void setUpChatListAdapter() {
-        mChatAdapter.setItemClickListener(new GroupChatAdapter.OnItemClickListener() {
+        mChatAdapter.setItemClickListener(new PrivateChatAdapter.OnItemClickListener() {
             @Override
             public void onUserMessageItemClick(UserMessage message) {
                 // Restore failed message and remove the failed message from list.
@@ -481,7 +474,7 @@ public class GroupChatFragment extends Fragment {
                 }
 
 
-                if (message.getCustomType().equals(GroupChatAdapter.URL_PREVIEW_CUSTOM_TYPE)) {
+                if (message.getCustomType().equals(PrivateChatAdapter.URL_PREVIEW_CUSTOM_TYPE)) {
                     try {
                         UrlPreviewInfo info = new UrlPreviewInfo(message.getData());
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(info.getUrl()));
@@ -510,7 +503,7 @@ public class GroupChatFragment extends Fragment {
             }
         });
 
-        mChatAdapter.setItemLongClickListener(new GroupChatAdapter.OnItemLongClickListener() {
+        mChatAdapter.setItemLongClickListener(new PrivateChatAdapter.OnItemLongClickListener() {
             @Override
             public void onUserMessageItemLongClick(UserMessage message, int position) {
                 showMessageOptionsDialog(message, position);
@@ -587,7 +580,7 @@ public class GroupChatFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((GroupChannelActivity)context).setOnBackPressedListener(new GroupChannelActivity.onBackPressedListener() {
+        ((PrivateChannelActivity)context).setOnBackPressedListener(new PrivateChannelActivity.onBackPressedListener() {
             @Override
             public boolean onBack() {
                 if (mCurrentState == STATE_EDIT) {
@@ -751,7 +744,7 @@ public class GroupChatFragment extends Fragment {
 
         // Set action bar title to name of channel
         if (getActivity() != null) {
-            ((GroupChannelActivity) getActivity()).setActionBarTitle(title);
+            ((PrivateChannelActivity) getActivity()).setActionBarTitle(title);
         }
     }
 
@@ -782,7 +775,7 @@ public class GroupChatFragment extends Fragment {
                 try {
                     // Sending a message with URL preview information and custom type.
                     String jsonString = info.toJsonString();
-                    tempUserMessage = mChannel.sendUserMessage(text, jsonString, GroupChatAdapter.URL_PREVIEW_CUSTOM_TYPE, handler);
+                    tempUserMessage = mChannel.sendUserMessage(text, jsonString, PrivateChatAdapter.URL_PREVIEW_CUSTOM_TYPE, handler);
                 } catch (Exception e) {
                     // Sending a message without URL preview information.
                     tempUserMessage = mChannel.sendUserMessage(text, handler);
@@ -802,7 +795,7 @@ public class GroupChatFragment extends Fragment {
             return;
         }
 
-        UserMessage tempUserMessage = mChannel.sendUserMessage(text, null, GROUP_MESSAGE, new BaseChannel.SendUserMessageHandler() {
+        UserMessage tempUserMessage = mChannel.sendUserMessage(text, null, PRIVATE_MESSAGE, new BaseChannel.SendUserMessageHandler() {
             @Override
             public void onSent(UserMessage userMessage, SendBirdException e) {
                 if (e != null) {
@@ -967,4 +960,5 @@ public class GroupChatFragment extends Fragment {
             }
         });
     }
+
 }

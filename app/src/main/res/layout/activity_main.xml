@@ -44,7 +44,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/group_icon_40_dp"
+                    android:background="@drawable/ic_group"
                     android:layout_marginLeft="19.5dp"
                     android:layout_marginRight="14dp"
                     android:layout_gravity="center_vertical"/>
@@ -52,7 +52,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Group Channels"
+                    android:text="Group Chat"
                     android:layout_gravity="center_vertical"
                     android:textColor="#000000"
                     android:textSize="16sp"/>
@@ -74,7 +74,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/open_icon_40_dp"
+                    android:background="@drawable/ic_open"
                     android:layout_marginLeft="19.5dp"
                     android:layout_marginRight="14dp"
                     android:layout_gravity="center_vertical"/>
@@ -82,7 +82,37 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Open Channels"
+                    android:text="Public Chat Room"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="0"
+                android:background="#e0e0e0"/>
+
+            <LinearLayout
+                android:id="@+id/linear_layout_private_channels"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/ic_private"
+                    android:layout_marginLeft="19.5dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1-ON-1 Messaging"
                     android:layout_gravity="center_vertical"
                     android:textColor="#000000"
                     android:textSize="16sp"/>
@@ -104,9 +134,9 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_disconnect"
-            android:text="@string/login_disconnect"
             style="@style/Widget.AppCompat.Button.Colored"
-            app:theme="@style/AppTheme.ButtonStyle2"
+            app:theme="@style/AppTheme.ButtonStyle"
+            android:text="@string/login_disconnect"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_weight="0"
@@ -115,7 +145,7 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:stateListAnimator="@null"
-            android:background="@drawable/selector_btn_white">
+            android:background="@drawable/btn_logout">
         </android.support.v7.widget.AppCompatButton>
 
         <TextView
@@ -127,7 +157,8 @@
             android:layout_marginBottom="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

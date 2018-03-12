@@ -1,4 +1,4 @@
-package com.sendbird.android.sample.groupchannel;
+package com.sendbird.android.sample.privatechannel;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,15 +10,14 @@ import android.view.MenuItem;
 
 import com.sendbird.android.sample.R;
 
-
-public class GroupChannelActivity extends AppCompatActivity{
+public class PrivateChannelActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_channel);
+        setContentView(R.layout.activity_private_channel);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_group_channel);
+        Toolbar toolbar = findViewById(R.id.toolbar_private_channel);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -27,23 +26,23 @@ public class GroupChannelActivity extends AppCompatActivity{
 
         if (savedInstanceState == null) {
             // If started from launcher, load list of Open Channels
-            Fragment fragment = GroupChannelListFragment.newInstance();
+            Fragment fragment = PrivateChannelListFragment.newInstance();
 
             FragmentManager manager = getSupportFragmentManager();
             manager.popBackStack();
 
             manager.beginTransaction()
-                    .replace(R.id.container_group_channel, fragment)
+                    .replace(R.id.container_private_channel, fragment)
                     .commit();
         }
 
         String channelUrl = getIntent().getStringExtra("groupChannelUrl");
         if(channelUrl != null) {
             // If started from notification
-            Fragment fragment = GroupChatFragment.newInstance(channelUrl);
+            Fragment fragment = PrivateChatFragment.newInstance(channelUrl);
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction()
-                    .replace(R.id.container_group_channel, fragment)
+                    .replace(R.id.container_private_channel, fragment)
                     .addToBackStack(null)
                     .commit();
         }
@@ -52,9 +51,9 @@ public class GroupChannelActivity extends AppCompatActivity{
     interface onBackPressedListener {
         boolean onBack();
     }
-    private onBackPressedListener mOnBackPressedListener;
+    private PrivateChannelActivity.onBackPressedListener mOnBackPressedListener;
 
-    public void setOnBackPressedListener(onBackPressedListener listener) {
+    public void setOnBackPressedListener(PrivateChannelActivity.onBackPressedListener listener) {
         mOnBackPressedListener = listener;
     }
 
@@ -83,4 +82,5 @@ public class GroupChannelActivity extends AppCompatActivity{
             getSupportActionBar().setTitle(title);
         }
     }
+
 }

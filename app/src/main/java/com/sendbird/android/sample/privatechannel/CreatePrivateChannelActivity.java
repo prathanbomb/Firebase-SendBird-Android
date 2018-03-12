@@ -1,4 +1,4 @@
-package com.sendbird.android.sample.groupchannel;
+package com.sendbird.android.sample.privatechannel;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,21 +14,16 @@ import android.widget.Button;
 import com.sendbird.android.GroupChannel;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.sample.R;
+import com.sendbird.android.sample.groupchannel.SelectDistinctFragment;
 import com.sendbird.android.sample.utils.PreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * An Activity to create a new Group Channel.
- * First displays a selectable list of users,
- * then shows an option to create a Distinct channel.
- */
-
-public class CreateGroupChannelActivity extends AppCompatActivity implements SelectUserFragment.UsersSelectedListener, SelectDistinctFragment.DistinctSelectedListener {
+public class CreatePrivateChannelActivity extends AppCompatActivity implements SelectPrivateUserFragment.UsersSelectedListener, SelectDistinctFragment.DistinctSelectedListener {
 
     public static final String EXTRA_NEW_CHANNEL_URL = "EXTRA_NEW_CHANNEL_URL";
-    public static final String CUSTOM_TYPE_GROUP = "GROUP";
+    public static final String CUSTOM_TYPE_PRIVATE = "PRIVATE";
 
     static final int STATE_SELECT_USERS = 0;
     static final int STATE_SELECT_DISTINCT = 1;
@@ -46,47 +41,47 @@ public class CreateGroupChannelActivity extends AppCompatActivity implements Sel
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_create_group_channel);
+        setContentView(R.layout.activity_create_private_channel);
 
         mSelectedIds = new ArrayList<>();
 
         if (savedInstanceState == null) {
-            Fragment fragment = SelectUserFragment.newInstance();
+            Fragment fragment = SelectPrivateUserFragment.newInstance();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction()
-                    .replace(R.id.container_create_group_channel, fragment)
+                    .replace(R.id.container_create_private_channel, fragment)
                     .commit();
         }
 
-        mNextButton = (Button) findViewById(R.id.button_create_group_channel_next);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentState == STATE_SELECT_USERS) {
-                    Fragment fragment = SelectDistinctFragment.newInstance();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container_create_group_channel, fragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
-            }
-        });
-        mNextButton.setEnabled(false);
+//        mNextButton = findViewById(R.id.button_create_private_channel_next);
+//        mNextButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mCurrentState == STATE_SELECT_USERS) {
+//                    Fragment fragment = SelectDistinctFragment.newInstance();
+//                    getSupportFragmentManager().beginTransaction()
+//                            .replace(R.id.container_create_private_channel, fragment)
+//                            .addToBackStack(null)
+//                            .commit();
+//                }
+//            }
+//        });
+//        mNextButton.setEnabled(false);
+//
+//        mCreateButton = findViewById(R.id.button_create_private_channel_create);
+//        mCreateButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mCurrentState == STATE_SELECT_USERS) {
+////                if (mCurrentState == STATE_SELECT_DISTINCT) {
+                    mIsDistinct = PreferenceUtils.getGroupChannelDistinct(CreatePrivateChannelActivity.this);
+//                    createGroupChannel(mSelectedIds, mIsDistinct);
+//                }
+//            }
+//        });
+//        mCreateButton.setEnabled(false);
 
-        mCreateButton = (Button) findViewById(R.id.button_create_group_channel_create);
-        mCreateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCurrentState == STATE_SELECT_USERS) {
-//                if (mCurrentState == STATE_SELECT_DISTINCT) {
-                    mIsDistinct = PreferenceUtils.getGroupChannelDistinct(CreateGroupChannelActivity.this);
-                    createGroupChannel(mSelectedIds, mIsDistinct);
-                }
-            }
-        });
-        mCreateButton.setEnabled(false);
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_create_group_channel);
+        mToolbar = findViewById(R.id.toolbar_create_private_channel);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -122,20 +117,9 @@ public class CreateGroupChannelActivity extends AppCompatActivity implements Sel
     }
 
     @Override
-    public void onUserSelected(boolean selected, String userId) {
-        if (selected) {
-            mSelectedIds.add(userId);
-        } else {
-            mSelectedIds.remove(userId);
-        }
-
-        if (mSelectedIds.size() > 1) {
-            mCreateButton.setEnabled(true);
-//            mNextButton.setEnabled(true);
-        } else {
-            mCreateButton.setEnabled(false);
-//            mNextButton.setEnabled(false);
-        }
+    public void onUserSelected(String userId) {
+        mSelectedIds.add(userId);
+        createGroupChannel(mSelectedIds, mIsDistinct);
     }
 
     @Override
@@ -156,7 +140,7 @@ public class CreateGroupChannelActivity extends AppCompatActivity implements Sel
      *                  the existing channel instance will be returned.
      */
     private void createGroupChannel(List<String> userIds, boolean distinct) {
-        GroupChannel.createChannelWithUserIds(userIds, distinct, null, null, null, CUSTOM_TYPE_GROUP, new GroupChannel.GroupChannelCreateHandler() {
+        GroupChannel.createChannelWithUserIds(userIds, distinct, null, null, null, CUSTOM_TYPE_PRIVATE, new GroupChannel.GroupChannelCreateHandler() {
             @Override
             public void onResult(GroupChannel groupChannel, SendBirdException e) {
                 if (e != null) {
@@ -171,6 +155,4 @@ public class CreateGroupChannelActivity extends AppCompatActivity implements Sel
             }
         });
     }
-
-
 }

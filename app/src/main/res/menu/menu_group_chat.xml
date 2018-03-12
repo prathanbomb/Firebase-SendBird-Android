@@ -12,4 +12,9 @@
         android:orderInCategory="20"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_group_channel_leave"
+        android:title="Leave Group"
+        android:orderInCategory="30"
+        app:showAsAction="never"/>
+
 </menu>
