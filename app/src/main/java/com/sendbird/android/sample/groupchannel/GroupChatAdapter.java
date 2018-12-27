@@ -2,7 +2,6 @@ package com.sendbird.android.sample.groupchannel;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 
 class GroupChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

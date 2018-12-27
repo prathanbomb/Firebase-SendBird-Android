@@ -27,7 +27,6 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -39,6 +38,8 @@ import com.sendbird.android.sample.utils.PreferenceUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import androidx.core.app.NotificationCompat;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
