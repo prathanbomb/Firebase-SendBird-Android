@@ -8,53 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:611784007150:android:eec7b158db31d4b3",
+        "mobilesdk_app_id": "1:611784007150:android:2dfea11c8f84e083",
         "android_client_info": {
-          "package_name": "th.co.digio.digiochatapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "611784007150-u9jjgpr7hcqr37q6ot7dqd2k3jtifmaf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "th.co.digio.digiochatapp",
-            "certificate_hash": "1618a3b7de9680f806f0224fda87b8efe16573dc"
-          }
-        },
-        {
-          "client_id": "611784007150-rdvp5u3kjkktmm6nb1cjcppoknsca1u0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAOS30yHuAaJvQ1Ms_9UEv_U7rtLH2DSbQ"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "611784007150-rdvp5u3kjkktmm6nb1cjcppoknsca1u0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:611784007150:android:abe06d49c04fba23",
-        "android_client_info": {
-          "package_name": "com.sendbird.android.sample"
+          "package_name": "th.co.digio.chatapp.demo"
         }
       },
       "oauth_client": [

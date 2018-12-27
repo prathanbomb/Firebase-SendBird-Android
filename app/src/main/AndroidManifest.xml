@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.sendbird.android.sample">
+    package="co.th.digio.chatapp.demo">
 
     <uses-sdk tools:overrideLibrary="com.stfalcon.multiimageview" />
 
@@ -11,20 +11,20 @@
 
     <!-- min 16 -->
     <application
-        android:name=".main.BaseApplication"
+        android:name="th.co.digio.chatapp.demo.main.BaseApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".main.SplashScreenActivity">
+        <activity android:name="th.co.digio.chatapp.demo.main.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.LoginActivity">
+        <activity android:name="th.co.digio.chatapp.demo.main.LoginActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -34,44 +34,44 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".main.MainActivity"
+            android:name="th.co.digio.chatapp.demo.main.MainActivity"
             android:label="@string/select_channel_type" />
         <activity
-            android:name=".main.SettingsActivity"
+            android:name="th.co.digio.chatapp.demo.main.SettingsActivity"
             android:label="@string/settings" />
         <activity
-            android:name=".main.BlockedMembersListActivity"
+            android:name="th.co.digio.chatapp.demo.main.BlockedMembersListActivity"
             android:label="@string/blocked_members_list" />
-        <activity android:name=".utils.PhotoViewerActivity" />
+        <activity android:name="th.co.digio.chatapp.demo.utils.PhotoViewerActivity" />
         <activity
-            android:name=".utils.MediaPlayerActivity"
+            android:name="th.co.digio.chatapp.demo.utils.MediaPlayerActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".openchannel.CreateOpenChannelActivity"
+            android:name="th.co.digio.chatapp.demo.openchannel.CreateOpenChannelActivity"
             android:label="@string/create_open_channel" />
         <activity
-            android:name=".groupchannel.InviteMemberActivity"
+            android:name="th.co.digio.chatapp.demo.groupchannel.InviteMemberActivity"
             android:label="@string/invite_member" />
         <activity
-            android:name=".groupchannel.MemberListActivity"
+            android:name="th.co.digio.chatapp.demo.groupchannel.MemberListActivity"
             android:label="@string/member_list" />
         <activity
-            android:name=".groupchannel.CreateGroupChannelActivity"
+            android:name="th.co.digio.chatapp.demo.groupchannel.CreateGroupChannelActivity"
             android:label="@string/create_group_channel" />
         <activity
-            android:name=".openchannel.ParticipantListActivity"
+            android:name="th.co.digio.chatapp.demo.openchannel.ParticipantListActivity"
             android:label="@string/participant_list" />
-        <activity android:name=".openchannel.OpenChannelActivity" />
-        <activity android:name=".groupchannel.GroupChannelActivity" />
-        <activity android:name=".privatechannel.PrivateChannelActivity" />
-        <activity android:name=".privatechannel.CreatePrivateChannelActivity" />
+        <activity android:name="th.co.digio.chatapp.demo.openchannel.OpenChannelActivity" />
+        <activity android:name="th.co.digio.chatapp.demo.groupchannel.GroupChannelActivity" />
+        <activity android:name="th.co.digio.chatapp.demo.privatechannel.PrivateChannelActivity" />
+        <activity android:name="th.co.digio.chatapp.demo.privatechannel.CreatePrivateChannelActivity" />
 
-        <service android:name=".fcm.MyFirebaseMessagingService">
+        <service android:name="th.co.digio.chatapp.demo.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm.MyFirebaseInstanceIDService">
+        <service android:name="th.co.digio.chatapp.demo.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -97,7 +97,7 @@
                 <data android:scheme="@string/facebook_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.RegisterActivity" />
+        <activity android:name="th.co.digio.chatapp.demo.main.RegisterActivity" />
     </application>
 
 </manifest>
