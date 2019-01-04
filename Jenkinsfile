@@ -15,7 +15,7 @@ pipeline {
         }
         stage('coverage test') {
           steps {
-            sh './gradlew task'
+            sh './gradlew check'
           }
         }
         stage('lint check') {
@@ -33,8 +33,10 @@ pipeline {
   }
   post {
     always {
-      archiveArtifacts artifacts: '**/*.apk', fingerprint: true
+      archiveArtifacts(artifacts: '**/*.apk', fingerprint: true)
       junit 'build/reports/**/*.xml'
+
     }
+
   }
 }
