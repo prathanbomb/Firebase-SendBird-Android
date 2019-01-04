@@ -30,10 +30,11 @@ pipeline {
         sh './gradlew assemble'
       }
     }
-    stage('archive artifacts') {
-      steps {
-        archiveArtifacts '**/*.apk'
-      }
+  }
+  post {
+    always {
+      archiveArtifacts artifacts: '**/*.apk', fingerprint: true
+      junit 'build/reports/**/*.xml'
     }
   }
 }
