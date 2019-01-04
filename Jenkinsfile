@@ -18,11 +18,6 @@ pipeline {
             sh './gradlew task'
           }
         }
-        stage('sonarqube') {
-          steps {
-            sh './gradlew sonarqube'
-          }
-        }
       }
     }
     stage('assemble') {
