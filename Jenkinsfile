@@ -27,7 +27,7 @@ pipeline {
     }
     stage('archive artifacts') {
       steps {
-        archiveArtifacts 'app/build/outputs/apk/*.apk'
+        archiveArtifacts '**/*.apk'
       }
     }
   }
