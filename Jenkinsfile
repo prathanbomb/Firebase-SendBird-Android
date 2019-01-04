@@ -10,11 +10,6 @@ pipeline {
       parallel {
         stage('unit test') {
           steps {
-            sh './gradlew test'
-          }
-        }
-        stage('coverage test') {
-          steps {
             sh './gradlew check'
           }
         }
@@ -35,16 +30,18 @@ pipeline {
     always {
       archiveArtifacts(artifacts: '**/*.apk', fingerprint: true)
       junit 'build/reports/**/*.xml'
+
     }
+
     failure {
-        mail to: 'supitsara@digio.co.th',
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
+      mail(to: 'supitsara@digio.co.th', subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}")
+
     }
+
     success {
-        mail to: 'supitsara@digio.co.th',
-             subject: "Succeed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Congrats and check it out at ${env.BUILD_URL}"
+      mail(to: 'supitsara@digio.co.th', subject: "Succeed Pipeline: ${currentBuild.fullDisplayName}", body: "Congrats and check it out at ${env.BUILD_URL}")
+
     }
+
   }
 }
