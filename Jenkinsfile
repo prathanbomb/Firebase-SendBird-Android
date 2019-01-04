@@ -18,11 +18,16 @@ pipeline {
             sh './gradlew task'
           }
         }
+        stage('lint check') {
+          steps {
+            sh './gradlew lint'
+          }
+        }
       }
     }
     stage('assemble') {
       steps {
-        sh './gradlew assembleDebug'
+        sh './gradlew assemble'
       }
     }
     stage('archive artifacts') {
