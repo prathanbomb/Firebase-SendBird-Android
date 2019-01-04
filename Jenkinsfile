@@ -36,5 +36,15 @@ pipeline {
       archiveArtifacts(artifacts: '**/*.apk', fingerprint: true)
       junit 'build/reports/**/*.xml'
     }
+    failure {
+        mail to: 'supitsara@digio.co.th',
+             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong with ${env.BUILD_URL}"
+    }
+    success {
+        mail to: 'supitsara@digio.co.th',
+             subject: "Succeed Pipeline: ${currentBuild.fullDisplayName}",
+             body: "Congrats and check it out at ${env.BUILD_URL}"
+    }
   }
 }
