@@ -28,22 +28,12 @@ pipeline {
   }
   post {
     failure {
-      def token = 'kFrfPqbAvIg4KeXBWKMRRppHyJCsb3tPGTGqeg6XNKN'
-      def url = 'https://notify-api.line.me/api/notify'
-      def message = "${env.JOB_NAME} #${env.BUILD_NUMBER} \nresult is ${result}. \n${env.BUILD_URL}"
-      def stickerId = '173'
-      def stickerPackageId = '2'
-      sh "curl ${url} -H 'Authorization: Bearer ${token}' -F 'message=${message}' -F 'stickerId=${stickerId}' -F 'stickerPackageId=${stickerPackageId}'"
+      sh "curl https://notify-api.line.me/api/notify -H 'Authorization: Bearer kFrfPqbAvIg4KeXBWKMRRppHyJCsb3tPGTGqeg6XNKN' -F 'message=${env.JOB_NAME} #${env.BUILD_NUMBER} \nresult is failed. \n${env.BUILD_URL}' -F 'stickerId=173' -F 'stickerPackageId=2'"
     }
     success {
       archiveArtifacts(artifacts: '**/*.apk', fingerprint: true)
       junit '**/*.xml'
-      def token = 'kFrfPqbAvIg4KeXBWKMRRppHyJCsb3tPGTGqeg6XNKN'
-      def url = 'https://notify-api.line.me/api/notify'
-      def message = "${env.JOB_NAME} #${env.BUILD_NUMBER} \nresult is ${result}. \n${env.BUILD_URL}"
-      def stickerId = '525'
-      def stickerPackageId = '2'
-      sh "curl ${url} -H 'Authorization: Bearer ${token}' -F 'message=${message}' -F 'stickerId=${stickerId}' -F 'stickerPackageId=${stickerPackageId}'"
+      sh "curl https://notify-api.line.me/api/notify -H 'Authorization: Bearer kFrfPqbAvIg4KeXBWKMRRppHyJCsb3tPGTGqeg6XNKN' -F 'message=${env.JOB_NAME} #${env.BUILD_NUMBER} \nresult is succeed. \n${env.BUILD_URL}' -F 'stickerId=525' -F 'stickerPackageId=2'"
     }
   }
 }
