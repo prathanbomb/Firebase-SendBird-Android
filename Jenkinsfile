@@ -31,7 +31,7 @@ pipeline {
       def token = 'kFrfPqbAvIg4KeXBWKMRRppHyJCsb3tPGTGqeg6XNKN'
       def url = 'https://notify-api.line.me/api/notify'
       def message = "${env.JOB_NAME} #${env.BUILD_NUMBER} \nresult is ${result}. \n${env.BUILD_URL}"
-      def stickerId = '173' : '525'
+      def stickerId = '173'
       def stickerPackageId = '2'
       sh "curl ${url} -H 'Authorization: Bearer ${token}' -F 'message=${message}' -F 'stickerId=${stickerId}' -F 'stickerPackageId=${stickerPackageId}'"
     }
